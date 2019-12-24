@@ -9,24 +9,42 @@
 import Foundation
 
 class aaa {
-    var ja: URL? {
-        guard let path = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else { return nil }
+    var jFile: URL {
+        guard let path = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else {
+            print("エラー： ja-JP.lproj/Localizable.strings が見つかりませんでした。")
+            fatalError()
+        }
         return URL(fileURLWithPath: path)
     }
 
-    var en: URL? {
-        guard let path = Bundle.main.path(forResource: "en.lproj/Localizable", ofType: "strings") else { return nil }
+    var eFile: URL {
+        guard let path = Bundle.main.path(forResource: "en.lproj/Localizable", ofType: "strings") else {
+            print("エラー： en.lproj/Localizable.strings が見つかりませんでした。")
+            fatalError()
+        }
         return URL(fileURLWithPath: path)
     }
 
-    var swift: URL? {
-        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "swift") else { return nil }
+    var sFile: URL {
+        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "swift") else {
+            print("エラー： Localizable.swift が見つかりませんでした。")
+            fatalError()
+        }
         return URL(fileURLWithPath: path)
     }
 
-    var csv: String? {
-        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "csv") else { return nil }
-        return try? String(contentsOfFile: path, encoding: .utf8)
+    var csv: CSVReader {
+        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "csv") else {
+            print("エラー： Localizable.csv が見つかりませんでした。")
+            fatalError()
+        }
+
+        guard let stream = InputStream(fileAtPath: path),
+              let reader = try? CSVReader(stream: stream) else {
+                print("エラー： Localizable.csv の読み込みに失敗しました。")
+                fatalError()
+        }
+        return reader
     }
 
     func write(_ text: String, to: URL) {
@@ -36,20 +54,24 @@ class aaa {
         catch { /* error handling here */ }
     }
 
-    func hoge() {
-        let stream = InputStream(fileAtPath: Bundle.main.path(forResource: "Localizable", ofType: "csv")!)!
-        let csv = try! CSVReader(stream: stream)
+    let caution = "// ### 注意 ###\n"
+        + "// このファイルは直接編集しないでください。\n"
+        + "// 文言を追加・修正したい場合はLocalizable.csvを編集してから\n"
+        + "// Localizer.appを実行してください。\n"
+        + "\n"
 
-        var jBuffer = ""
-        var eBuffer = ""
-        var sBuffer = "internal enum Localizable: String {\n"
+    func hoge() {
+
+        var jBuffer = caution
+        var eBuffer = caution
+        var sBuffer = caution + "internal enum Localizable: String {\n"
             + "    internal var localize: String {\n"
             + "        self.rawValue.localize\n"
             + "    }\n"
             + "\n"
 
-
-        while let row = csv.next() {
+        let csvReader = csv
+        while let row = csvReader.next() {
             let line = Line(row)
 
             switch line.kind {
@@ -67,15 +89,17 @@ class aaa {
                 jBuffer += "\"\(line.key)\" = \"\(line.jValue)\";\n"
                 eBuffer += "\"\(line.key)\" = \"\(line.eValue)\";\n"
                 sBuffer += "    /// \(line.jValue) / \(line.eValue) \n"
-                         + "    case \(line.safeKey) = \"\(line.key)\"\n"
+                        +  "    case \(line.safeKey) = \"\(line.key)\"\n"
             }
         }
 
         sBuffer += "}\n"
 
-        write(jBuffer, to: ja!)
-        write(eBuffer, to: en!)
-        write(sBuffer, to: swift!)
+        write(jBuffer, to: jFile)
+        write(eBuffer, to: eFile)
+        write(sBuffer, to: sFile)
+
+        print("★正常終了")
     }
 
 }
@@ -86,6 +110,10 @@ struct Line {
     let eValue: String
 
     init(_ cells: [String]) {
+        guard cells.count == 3 else {
+            print("★エラー：列数は3にしてください。 \(cells.description)")
+            fatalError()
+        }
         key = cells[0]
         jValue = cells[1]
         eValue = cells[2]
@@ -120,5 +148,3 @@ struct Line {
 
 
 aaa().hoge()
-
-
