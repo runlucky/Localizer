@@ -51,7 +51,10 @@ class aaa {
         do {
             try text.write(to: to, atomically: false, encoding: .utf8)
         }
-        catch { /* error handling here */ }
+        catch {
+            print("エラー： \(to.path)への書き込みに失敗しました。 (\(error.localizedDescription))")
+            fatalError()
+        }
     }
 
     let caution = "// ### 注意 ###\n"
