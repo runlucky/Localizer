@@ -37,7 +37,7 @@ struct Line {
     }
 
     var kind: Kind {
-        if key == "Key" && jValue == "Japanease" { return .header }
+        if key == "Key" && jValue == "Japanese" { return .header }
         if key.isEmpty && jValue.isEmpty && eValue.isEmpty { return .blank }
         if key.starts(with: "//") { return .comment }
         return .normal
@@ -64,7 +64,7 @@ struct Line {
         let jCount = jValue.count(word)
         let eCount = eValue.count(word)
         guard jCount == eCount else {
-            print("★エラー：\(word)の数が日本語と英語で違います。 key: \(key), japanease: \(jValue), english: \(eValue)")
+            print("★エラー：\(word)の数が日本語と英語で違います。 key: \(key), japanese: \(jValue), english: \(eValue)")
             fatalError()
         }
         return jCount

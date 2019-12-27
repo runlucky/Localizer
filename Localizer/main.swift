@@ -13,7 +13,7 @@ let file = File()
 let buffer = Buffer(csv: file.csv)
 buffer.create()
 
-file.japanease.write(buffer.japanease)
+file.japanese.write(buffer.japanese)
 file.english.write(buffer.english)
 file.definition.write(buffer.definition)
 

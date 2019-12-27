@@ -10,7 +10,7 @@ import Foundation
 
 
 struct File {
-    var japanease: URL {
+    var japanese: URL {
         guard let path = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else {
             print("エラー： ja-JP.lproj/Localizable.strings が見つかりませんでした。")
             fatalError()

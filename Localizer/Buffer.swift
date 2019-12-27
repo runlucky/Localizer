@@ -16,13 +16,13 @@ class Buffer {
                         + "// Localizer.appを実行してください。\n"
                         + "\n"
 
-    private(set) var japanease: String
+    private(set) var japanese: String
     private(set) var english: String
     private(set) var definition: String
 
     init(csv: CSVReader) {
         self.csv = csv
-        self.japanease = caution
+        self.japanese = caution
         self.english = caution
         self.definition = caution +  "internal enum Localizable {\n"
     }
@@ -36,15 +36,15 @@ class Buffer {
             case .header:
                 continue
             case .blank:
-                japanease += "\n"
+                japanese += "\n"
                 english += "\n"
                 definition += "\n"
             case .comment:
-                japanease += line.key + "\n"
+                japanese += line.key + "\n"
                 english += line.key + "\n"
                 definition += line.key + "\n"
             case .normal:
-                japanease += "\"\(line.key)\" = \"\(line.jValue)\";\n"
+                japanese += "\"\(line.key)\" = \"\(line.jValue)\";\n"
                 english += "\"\(line.key)\" = \"\(line.eValue)\";\n"
                 definition += "    /// \(line.jValue) / \(line.eValue) \n"
 
@@ -74,7 +74,7 @@ class Buffer {
                     lBuffer += "        case .\(line.safeKey)(let x1, let x2): return \"\(line.key)\".localize(arguments: [x1, x2])\n"
                     definition += "    case \(line.safeKey)(Int, Int)\n"
                 default:
-                    print("★エラー：この%の数には対応していません。 key: \(line.key), japanease: \(line.jValue), english: \(line.eValue)")
+                    print("★エラー：この%の数には対応していません。 key: \(line.key), japanese: \(line.jValue), english: \(line.eValue)")
                     fatalError()
                 }
             }
