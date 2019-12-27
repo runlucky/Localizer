@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		082EE34123B4428800043B4E /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082EE34023B4428800043B4E /* StringExtensions.swift */; };
+		082EE34323B4444200043B4E /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082EE34223B4444200043B4E /* Line.swift */; };
+		082EE34523B4447E00043B4E /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082EE34423B4447E00043B4E /* FileManager.swift */; };
+		082EE34723B446A200043B4E /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082EE34623B446A200043B4E /* URLExtensions.swift */; };
+		082EE34923B44A3200043B4E /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082EE34823B44A3200043B4E /* Buffer.swift */; };
 		08DC5EE423B0C30900582371 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EE323B0C30900582371 /* main.swift */; };
 		08DC5EF323B0C32600582371 /* CSVError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EEB23B0C32600582371 /* CSVError.swift */; };
 		08DC5EF423B0C32600582371 /* CSVWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EEC23B0C32600582371 /* CSVWriter.swift */; };
@@ -31,6 +36,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		082EE34023B4428800043B4E /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		082EE34223B4444200043B4E /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		082EE34423B4447E00043B4E /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		082EE34623B446A200043B4E /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		082EE34823B44A3200043B4E /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		08DC5EE023B0C30900582371 /* Localizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Localizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		08DC5EE323B0C30900582371 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		08DC5EEB23B0C32600582371 /* CSVError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVError.swift; sourceTree = "<group>"; };
@@ -75,6 +85,11 @@
 			children = (
 				08DC5EEA23B0C32600582371 /* CSV */,
 				08DC5EE323B0C30900582371 /* main.swift */,
+				082EE34023B4428800043B4E /* StringExtensions.swift */,
+				082EE34223B4444200043B4E /* Line.swift */,
+				082EE34423B4447E00043B4E /* FileManager.swift */,
+				082EE34623B446A200043B4E /* URLExtensions.swift */,
+				082EE34823B44A3200043B4E /* Buffer.swift */,
 			);
 			path = Localizer;
 			sourceTree = "<group>";
@@ -154,12 +169,17 @@
 			files = (
 				08DC5EF923B0C32600582371 /* CSVRowDecoder.swift in Sources */,
 				08DC5EF423B0C32600582371 /* CSVWriter.swift in Sources */,
+				082EE34123B4428800043B4E /* StringExtensions.swift in Sources */,
+				082EE34523B4447E00043B4E /* FileManager.swift in Sources */,
+				082EE34723B446A200043B4E /* URLExtensions.swift in Sources */,
 				08DC5EF523B0C32600582371 /* BinaryReader.swift in Sources */,
 				08DC5EE423B0C30900582371 /* main.swift in Sources */,
 				08DC5EF723B0C32600582371 /* UnicodeIterator.swift in Sources */,
 				08DC5EFA23B0C32600582371 /* CSVReader.swift in Sources */,
+				082EE34923B44A3200043B4E /* Buffer.swift in Sources */,
 				08DC5EF623B0C32600582371 /* Legacy.swift in Sources */,
 				08DC5EF823B0C32600582371 /* Endian.swift in Sources */,
+				082EE34323B4444200043B4E /* Line.swift in Sources */,
 				08DC5EF323B0C32600582371 /* CSVError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
