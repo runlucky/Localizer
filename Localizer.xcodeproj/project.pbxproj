@@ -21,6 +21,8 @@
 		08DC5EF823B0C32600582371 /* Endian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EF023B0C32600582371 /* Endian.swift */; };
 		08DC5EF923B0C32600582371 /* CSVRowDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EF123B0C32600582371 /* CSVRowDecoder.swift */; };
 		08DC5EFA23B0C32600582371 /* CSVReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DC5EF223B0C32600582371 /* CSVReader.swift */; };
+		197C7E8523C1EC2500343DCE /* FileHandleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C7E8423C1EC2500343DCE /* FileHandleExtensions.swift */; };
+		197C7E8723C1EDC200343DCE /* LocalizerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C7E8623C1EDC200343DCE /* LocalizerError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +53,8 @@
 		08DC5EF023B0C32600582371 /* Endian.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endian.swift; sourceTree = "<group>"; };
 		08DC5EF123B0C32600582371 /* CSVRowDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVRowDecoder.swift; sourceTree = "<group>"; };
 		08DC5EF223B0C32600582371 /* CSVReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVReader.swift; sourceTree = "<group>"; };
+		197C7E8423C1EC2500343DCE /* FileHandleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHandleExtensions.swift; sourceTree = "<group>"; };
+		197C7E8623C1EDC200343DCE /* LocalizerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizerError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,8 @@
 				082EE34423B4447E00043B4E /* FileManager.swift */,
 				082EE34623B446A200043B4E /* URLExtensions.swift */,
 				082EE34823B44A3200043B4E /* Buffer.swift */,
+				197C7E8423C1EC2500343DCE /* FileHandleExtensions.swift */,
+				197C7E8623C1EDC200343DCE /* LocalizerError.swift */,
 			);
 			path = Localizer;
 			sourceTree = "<group>";
@@ -173,6 +179,7 @@
 				082EE34523B4447E00043B4E /* FileManager.swift in Sources */,
 				082EE34723B446A200043B4E /* URLExtensions.swift in Sources */,
 				08DC5EF523B0C32600582371 /* BinaryReader.swift in Sources */,
+				197C7E8523C1EC2500343DCE /* FileHandleExtensions.swift in Sources */,
 				08DC5EE423B0C30900582371 /* main.swift in Sources */,
 				08DC5EF723B0C32600582371 /* UnicodeIterator.swift in Sources */,
 				08DC5EFA23B0C32600582371 /* CSVReader.swift in Sources */,
@@ -181,6 +188,7 @@
 				08DC5EF823B0C32600582371 /* Endian.swift in Sources */,
 				082EE34323B4444200043B4E /* Line.swift in Sources */,
 				08DC5EF323B0C32600582371 /* CSVError.swift in Sources */,
+				197C7E8723C1EDC200343DCE /* LocalizerError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,8 +311,9 @@
 		08DC5EE823B0C30900582371 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 89944GJ9HX;
+				DEVELOPMENT_TEAM = S8M9V325CJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -314,8 +323,9 @@
 		08DC5EE923B0C30900582371 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 89944GJ9HX;
+				DEVELOPMENT_TEAM = S8M9V325CJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

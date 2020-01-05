@@ -27,11 +27,11 @@ class Buffer {
         self.definition = caution +  "internal enum Localizable {\n"
     }
 
-    func create() {
+    func create() throws {
         var lBuffer = "    internal var localize: String {\n"
                     + "        switch self {\n"
 
-        while let line = Line(csv.next()) {
+        while let line = try Line(csv.next()) {
             switch line.kind {
             case .header:
                 continue
@@ -48,7 +48,7 @@ class Buffer {
                 english += "\"\(line.key)\" = \"\(line.eValue)\";\n"
                 definition += "    /// \(line.jValue) / \(line.eValue) \n"
 
-                switch line.percent {
+                switch try line.percent() {
                 case 0:
                     lBuffer += "        case .\(line.safeKey): return \"\(line.key)\".localize\n"
                     definition += "    case \(line.safeKey)\n"
@@ -74,8 +74,7 @@ class Buffer {
                     lBuffer += "        case .\(line.safeKey)(let x1, let x2): return \"\(line.key)\".localize(arguments: [x1, x2])\n"
                     definition += "    case \(line.safeKey)(Int, Int)\n"
                 default:
-                    print("★エラー：この%の数には対応していません。 key: \(line.key), japanese: \(line.jValue), english: \(line.eValue)")
-                    fatalError()
+                    throw LocalizerError("この%の数には対応していません。 key: \(line.key), japanese: \(line.jValue), english: \(line.eValue)")
                 }
             }
         }

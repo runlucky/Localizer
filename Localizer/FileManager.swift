@@ -8,43 +8,35 @@
 
 import Foundation
 
-
 struct File {
-    var japanese: URL {
-        guard let path = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else {
-            print("エラー： ja-JP.lproj/Localizable.strings が見つかりませんでした。")
-            fatalError()
-        }
-        return URL(fileURLWithPath: path)
-    }
+    let japanese: URL
+    let english: URL
+    let definition: URL
+    let csv: CSVReader
 
-    var english: URL {
-        guard let path = Bundle.main.path(forResource: "en.lproj/Localizable", ofType: "strings") else {
-            print("エラー： en.lproj/Localizable.strings が見つかりませんでした。")
-            fatalError()
+    init() throws {
+        guard let jPath = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else {
+            throw LocalizerError("ja-JP.lproj/Localizable.strings が見つかりませんでした。")
         }
-        return URL(fileURLWithPath: path)
-    }
+        japanese = URL(fileURLWithPath: jPath)
 
-    var definition: URL {
+        guard let ePath = Bundle.main.path(forResource: "en.lproj/Localizable", ofType: "strings") else {
+            throw LocalizerError("en.lproj/Localizable.strings が見つかりませんでした。")
+        }
+        english = URL(fileURLWithPath: ePath)
+
         guard let path = Bundle.main.path(forResource: "Localizable", ofType: "swift") else {
-            print("エラー： Localizable.swift が見つかりませんでした。")
-            fatalError()
+            throw LocalizerError("Localizable.swift が見つかりませんでした。")
         }
-        return URL(fileURLWithPath: path)
-    }
+        definition = URL(fileURLWithPath: path)
 
-    var csv: CSVReader {
-        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "csv") else {
-            print("エラー： Localizable.csv が見つかりませんでした。")
-            fatalError()
+        guard let lPath = Bundle.main.path(forResource: "Localizable", ofType: "csv") else {
+            throw LocalizerError("Localizable.csv が見つかりませんでした。")
         }
-
-        guard let stream = InputStream(fileAtPath: path),
+        guard let stream = InputStream(fileAtPath: lPath),
               let reader = try? CSVReader(stream: stream) else {
-                print("エラー： Localizable.csv の読み込みに失敗しました。")
-                fatalError()
+            throw LocalizerError("Localizable.csv の読み込みに失敗しました。")
         }
-        return reader
+        csv = reader
     }
 }

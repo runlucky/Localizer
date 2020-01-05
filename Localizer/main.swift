@@ -7,14 +7,23 @@
 //
 
 import Foundation
+import Darwin
 
-let file = File()
+do {
+    let file = try File()
 
-let buffer = Buffer(csv: file.csv)
-buffer.create()
+    let buffer = Buffer(csv: file.csv)
+    try buffer.create()
 
-file.japanese.write(buffer.japanese)
-file.english.write(buffer.english)
-file.definition.write(buffer.definition)
+    try file.japanese.write(buffer.japanese)
+    try file.english.write(buffer.english)
+    try file.definition.write(buffer.definition)
 
-print("★正常終了")
+    print("★正常終了")
+    exit(0)
+} catch {
+    var stdErr = FileHandle.standardError
+    print("エラー: " + error.localizedDescription, to: &stdErr)
+    exit(1)
+}
+

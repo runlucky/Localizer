@@ -13,12 +13,12 @@ struct Line {
     let jValue: String
     let eValue: String
 
-    init?(_ cells: [String]?) {
+    init?(_ cells: [String]?) throws {
         guard let cells = cells else { return nil }
         guard cells.count == 3 else {
-            print("★エラー：列数は3にしてください。 \(cells.description)")
-            fatalError()
+            throw LocalizerError("列数は3にしてください。 \(cells.description)")
         }
+
         key = cells[0]
         jValue = cells[1]
         eValue = cells[2]
@@ -26,13 +26,13 @@ struct Line {
 
     var safeKey: String {
         key.replacingOccurrences(
-            of: #" +(.)"#,
-            with: #"_$1"#,
-            options: .regularExpression
+                of: #" +(.)"#,
+                with: #"_$1"#,
+                options: .regularExpression
         ).replacingOccurrences(
-            of: #"-"#,
-            with: #"_"#,
-            options: .regularExpression
+                of: #"-"#,
+                with: #"_"#,
+                options: .regularExpression
         )
     }
 
@@ -50,22 +50,25 @@ struct Line {
         case header
     }
 
-    var percent: Int {
-        let atmark = count("%@")
-        if atmark != 0 { return atmark }
+    func percent() throws -> Int {
+        do {
+            let atmark = try count("%@")
+            if atmark != 0 { return atmark }
 
-        let decimal = count("%d")
-        if decimal != 0 { return decimal + 100 }
+            let decimal = try count("%d")
+            if decimal != 0 { return decimal + 100 }
 
-        return 0
+            return 0
+        } catch {
+            throw error
+        }
     }
 
-    private func count(_ word: String) -> Int {
+    private func count(_ word: String) throws -> Int {
         let jCount = jValue.count(word)
         let eCount = eValue.count(word)
         guard jCount == eCount else {
-            print("★エラー：\(word)の数が日本語と英語で違います。 key: \(key), japanese: \(jValue), english: \(eValue)")
-            fatalError()
+            throw LocalizerError("\(word)の数が日本語と英語で違います。 key: \(key), japanese: \(jValue), english: \(eValue)")
         }
         return jCount
     }

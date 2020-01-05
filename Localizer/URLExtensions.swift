@@ -10,13 +10,11 @@ import Foundation
 
 extension URL {
 
-    func write(_ text: String) {
+    func write(_ text: String) throws {
         do {
             try text.write(to: self, atomically: false, encoding: .utf8)
-        }
-        catch {
-            print("エラー： \(self.path)への書き込みに失敗しました。 (\(error.localizedDescription))")
-            fatalError()
+        } catch {
+            throw LocalizerError("\(self.path)への書き込みに失敗しました。 (\(error.localizedDescription))")
         }
     }
 }
