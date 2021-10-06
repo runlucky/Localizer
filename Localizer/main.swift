@@ -10,15 +10,9 @@ import Foundation
 import Darwin
 
 do {
-    let file = try File()
-
-    let buffer = Buffer(csv: file.csv)
-    try buffer.create()
-
-    try file.japanese.write(buffer.japanese)
-    try file.english.write(buffer.english)
-    try file.definition.write(buffer.definition)
-
+    let manager = try FileManager()
+    try manager.writeOutput()
+    
     print("★正常終了")
     exit(0)
 } catch {

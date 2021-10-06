@@ -8,35 +8,59 @@
 
 import Foundation
 
-struct File {
-    let japanese: URL
-    let english: URL
-    let definition: URL
-    let csv: CSVReader
+struct FileManager {
+    private let input: LocalizeDictionary
+    private let outputURL: URL
 
     init() throws {
-        guard let jPath = Bundle.main.path(forResource: "ja-JP.lproj/Localizable", ofType: "strings") else {
-            throw LocalizerError("ja-JP.lproj/Localizable.strings が見つかりませんでした。")
+        guard let url = Bundle.main.url(forResource: "LocalizeDictionary", withExtension: "json") else {
+            throw LocalizerError("LocalizeDictionary.json が見つかりませんでした。")
         }
-        japanese = URL(fileURLWithPath: jPath)
+        
+        let data = try Data(contentsOf: url)
+        input = try JSONDecoder().decode(LocalizeDictionary.self, from: data)
 
-        guard let ePath = Bundle.main.path(forResource: "en.lproj/Localizable", ofType: "strings") else {
-            throw LocalizerError("en.lproj/Localizable.strings が見つかりませんでした。")
+        guard let output = Bundle.main.url(forResource: "LocalizeKey", withExtension: "swift") else {
+            throw LocalizerError("LocalizeKey.swift が見つかりませんでした。")
         }
-        english = URL(fileURLWithPath: ePath)
-
-        guard let path = Bundle.main.path(forResource: "Localizable", ofType: "swift") else {
-            throw LocalizerError("Localizable.swift が見つかりませんでした。")
-        }
-        definition = URL(fileURLWithPath: path)
-
-        guard let lPath = Bundle.main.path(forResource: "Localizable", ofType: "csv") else {
-            throw LocalizerError("Localizable.csv が見つかりませんでした。")
-        }
-        guard let stream = InputStream(fileAtPath: lPath),
-              let reader = try? CSVReader(stream: stream) else {
-            throw LocalizerError("Localizable.csv の読み込みに失敗しました。")
-        }
-        csv = reader
+        self.outputURL = output
     }
+    
+    func writeOutput() throws {
+        try outputURL.write(try getOutput())
+    }
+    
+    private func getOutput() throws -> String {
+        var buffer = """
+        // ### 注意 ###
+        // このファイルは直接編集しないでください。
+        // 文言を追加・修正したい場合はLocalizeDictionary.jsonを編集してから
+        // Localizer.appを実行してください。
+        
+        /// バージョン\(input.version)
+        public enum LocalizeKey: String {
+        
+        """
+        
+        input.dictionary.forEach { word in
+            buffer += "    /// \(word.ja) / \(word.en)\n"
+                    + "    case \(word.key)\n"
+        }
+        
+        buffer += "}\n\n"
+        
+        return buffer
+    }
+
+}
+
+internal struct LocalizeDictionary: Codable {
+    internal let version: Int
+    internal let dictionary: [LocalizeWord]
+}
+
+internal struct LocalizeWord: Codable {
+    internal let key: String
+    internal let en: String
+    internal let ja: String
 }
